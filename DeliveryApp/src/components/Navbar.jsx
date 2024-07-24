@@ -12,12 +12,13 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex flex-row gap-3 items-center">
-          <button className="text-base bg-white rounded px-2 py-1">
+          <Link className="text-base bg-white rounded px-2 py-1" to="/login">
             Login
-          </button>
-          <button className="text-base bg-white rounded px-2 py-1">
+          </Link>
+
+          <Link className="text-base bg-white rounded px-2 py-1" to="/signup">
             Signup
-          </button>
+          </Link>
         </div>
       </nav>
     </>
