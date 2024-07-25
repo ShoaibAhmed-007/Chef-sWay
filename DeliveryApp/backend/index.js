@@ -29,3 +29,5 @@ app.get("/api", async (req, res) => {
 app.use("/api", require("./Routes/Signup.js"));
 
 app.use("/api", require("./Routes/Login.js"));
+
+app.use("/api", require("./Routes/displayData.js"));

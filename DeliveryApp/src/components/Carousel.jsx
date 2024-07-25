@@ -2,7 +2,7 @@ import Searchbar from "./Searchbar";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { useState } from "react";
 
-export default function CarouselTransition({ image }) {
+export default function CarouselTransition({ image, search, setSearch }) {
   const [current, setCurrent] = useState(0);
   const prev = () =>
     setCurrent((current) =>
@@ -32,7 +32,7 @@ export default function CarouselTransition({ image }) {
             <ChevronLeft size={40}></ChevronLeft>
           </button>
           <div className="pt-72">
-            <Searchbar></Searchbar>
+            <Searchbar search={search} setSearch={setSearch}></Searchbar>
           </div>
           <button
             onClick={next}

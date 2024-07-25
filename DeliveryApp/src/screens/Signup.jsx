@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  let navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -25,6 +26,9 @@ export default function Signup() {
     });
     const json = await response.json();
     console.log(json);
+    if (json.success) {
+      navigate("/");
+    }
     if (!json.success) {
       alert("Enter Valid Credentials");
     }

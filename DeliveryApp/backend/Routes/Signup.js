@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 router.post(
   "/signup",
@@ -21,8 +22,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(req.body.password, salt);
+
     try {
-      const { name, location, email, password } = req.body;
+      const { name, location, email } = req.body;
 
       let newUser = new User({
         name,

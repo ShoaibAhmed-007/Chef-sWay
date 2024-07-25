@@ -3,6 +3,9 @@ const router = express.Router();
 const User = require("../models/User");
 const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+let jwtSecret = "ThisIsMyFirstMERNapp";
+const bcrypt = require("bcryptjs");
 
 router.post(
   "/login",
@@ -22,10 +25,19 @@ router.post(
     try {
       let user = await User.findOne({ email });
       console.log(user);
-      if (user.password === password) {
-        res
-          .status(201)
-          .json({ success: true, message: "User logged in successfully" });
+      let comparePwd = bcrypt.compare(user.password, password);
+      if (comparePwd) {
+        let data = {
+          user: {
+            id: user.id,
+          },
+        };
+        const jwtAuth = jwt.sign(data, jwtSecret);
+        res.status(201).json({
+          success: true,
+          message: "User logged in successfully",
+          authToken: jwtAuth,
+        });
       } else {
         res.status(400).json({ success: false, message: "Incorrect Password" });
       }
