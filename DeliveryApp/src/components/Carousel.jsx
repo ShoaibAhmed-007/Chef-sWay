@@ -15,14 +15,14 @@ export default function CarouselTransition({ image, search, setSearch }) {
 
   return (
     <>
-      <div className="overflow-hidden h-96 relative">
+      <div className="overflow-hidden relative" style={{ height: "30em" }}>
         <div
           className="flex transition-transform ease-out duration-500"
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
-          {image.map((img) => {
-            return <img src={img}></img>;
-          })}
+          {image.map((img, index) => (
+            <img key={index} src={img} className="object-cover w-full h-full" />
+          ))}
         </div>
         <div className="p-1 absolute inset-0 flex items-center justify-between">
           <button
@@ -36,7 +36,7 @@ export default function CarouselTransition({ image, search, setSearch }) {
           </div>
           <button
             onClick={next}
-            className=" shadow hover:bg-white rounded-full text-gray-800 w-10"
+            className="shadow hover:bg-white rounded-full text-gray-800 w-10"
           >
             <ChevronRight size={40}></ChevronRight>
           </button>

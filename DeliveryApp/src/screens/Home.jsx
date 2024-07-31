@@ -8,13 +8,17 @@ import img2 from "../assets/Carousel Images/img2.jpg";
 import img3 from "../assets/Carousel Images/img3.jpg";
 let images = [img1, img2, img3];
 import CarouselTransition from "../components/Carousel.jsx";
+import MyCart from "../components/MyCart.jsx";
 let Cards = await cards();
 export default function Home() {
   const [search, setSearch] = useState("");
+  const [isCartVisible, setCartVisible] = useState(false);
+  const [myOrders, setOrders] = useState([]);
   return (
     <>
-      <Navbar />
-      <div className="max-w-full max-h-120">
+      <Navbar visible={setCartVisible} />
+
+      <div>
         <CarouselTransition
           image={images}
           search={search}
@@ -44,6 +48,11 @@ export default function Home() {
         );
       })}
 
+      <MyCart
+        visible={isCartVisible}
+        setVisible={setCartVisible}
+        myOrders={setOrders}
+      />
       <Footer />
     </>
   );

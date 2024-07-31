@@ -22,12 +22,10 @@ app.listen(port, () => {
   console.log("Listening to Port 300");
 });
 
-app.get("/api", async (req, res) => {
-  res.send("Hello World");
-});
-
 app.use("/api", require("./Routes/Signup.js"));
 
 app.use("/api", require("./Routes/Login.js"));
 
 app.use("/api", require("./Routes/displayData.js"));
+
+app.use("/api", require("./Routes/Order.js"));
