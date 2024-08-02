@@ -19,9 +19,6 @@ export default function Navbar({ visible }) {
         <Link className="text-3xl text-white font-bold" to="/">
           Chef'sWay
         </Link>
-        {/* <Link className="text-xl text-white" to="/">
-          Home
-        </Link> */}
       </div>
       <div className="flex items-center gap-6">
         {localStorage.getItem("authToken") ? (

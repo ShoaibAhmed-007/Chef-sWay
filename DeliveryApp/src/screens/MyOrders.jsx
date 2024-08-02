@@ -4,9 +4,10 @@ import Footer from "../components/Footer";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const myOrders = async () => {
-    let result = await fetch("https://chef-sway.onrender.com/api/getOrders", {
+    let result = await fetch(`${API_BASE_URL}/getOrders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

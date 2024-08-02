@@ -15,11 +15,12 @@ export default function MyCart({ visible, setVisible, myOrders }) {
   function deleteItem(item) {
     dispatch({ type: "DELETE", payload: item.id });
   }
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   function confirmOrder() {
     myOrders(state);
     const saveOrder = async () => {
-      let res = await fetch("https://chef-sway.onrender.com/api/orders", {
+      let res = await fetch(`${API_BASE_URL}/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

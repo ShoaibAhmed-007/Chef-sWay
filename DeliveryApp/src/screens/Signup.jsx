@@ -12,9 +12,11 @@ export default function Signup() {
     geolocation: "",
   });
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("https://chef-sway.onrender.com/api/signup", {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
