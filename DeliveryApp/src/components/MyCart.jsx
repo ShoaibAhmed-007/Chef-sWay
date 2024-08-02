@@ -19,7 +19,7 @@ export default function MyCart({ visible, setVisible, myOrders }) {
   function confirmOrder() {
     myOrders(state);
     const saveOrder = async () => {
-      let res = await fetch("http://localhost:3000/api/orders", {
+      let res = await fetch("https://chef-sway.onrender.com/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

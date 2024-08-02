@@ -6,7 +6,7 @@ export default function MyOrders() {
   const [orders, setOrders] = useState([]);
 
   const myOrders = async () => {
-    let result = await fetch("http://localhost:3000/api/getOrders", {
+    let result = await fetch("https://chef-sway.onrender.com/api/getOrders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
