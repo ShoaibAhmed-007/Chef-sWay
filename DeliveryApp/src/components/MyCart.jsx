@@ -20,7 +20,7 @@ export default function MyCart({ visible, setVisible, myOrders }) {
   function confirmOrder() {
     myOrders(state);
     const saveOrder = async () => {
-      let res = await fetch(`${API_BASE_URL}/orders`, {
+      let res = await fetch(`${API_BASE_URL}api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

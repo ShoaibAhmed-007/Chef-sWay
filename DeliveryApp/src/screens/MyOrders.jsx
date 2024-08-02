@@ -7,7 +7,7 @@ export default function MyOrders() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const myOrders = async () => {
-    let result = await fetch(`${API_BASE_URL}/getOrders`, {
+    let result = await fetch(`${API_BASE_URL}api/getOrders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

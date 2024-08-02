@@ -10,7 +10,7 @@ export default function Login() {
 
   const onSubmitHandle = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

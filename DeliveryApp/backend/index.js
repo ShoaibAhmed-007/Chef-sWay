@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://chefsway.netlify.app/");
+  res.setHeader("Access-Control-Allow-Origin", "https://chefsway.netlify.app");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin,X-Requested-With,Content-Type,Accept"
