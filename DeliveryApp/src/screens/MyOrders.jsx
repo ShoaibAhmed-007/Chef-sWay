@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import MyCart from "../components/MyCart";
+import Footer from "../components/Footer";
 
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -31,18 +31,18 @@ export default function MyOrders() {
   return (
     <>
       <Navbar />
-      <div className="p-10 flex flex-col gap-6">
+      <div className="p-10 min-h-screen bg-gray-300">
         {orders.length > 0 ? (
           orders.map((order, index) => (
             <div
-              className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white"
+              className="border border-gray-300 shadow-lg rounded-lg p-6 mb-6 bg-white"
               key={index}
             >
-              <div className="flex justify-between">
-                <h2 className="text-2xl font-semibold mb-4">
-                  Order Date: {order.orderDate}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold">
+                  Order Date: {new Date(order.orderDate).toLocaleDateString()}
                 </h2>
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-xl font-semibold">
                   Total Price: Rs. {calculateTotalPrice(order.orderData)}
                 </h2>
               </div>
@@ -72,9 +72,12 @@ export default function MyOrders() {
             </div>
           ))
         ) : (
-          <div>No orders found.</div>
+          <div className="text-center text-xl font-medium">
+            No orders found.
+          </div>
         )}
       </div>
+      <Footer />
     </>
   );
 }

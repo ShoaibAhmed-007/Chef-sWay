@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Login() {
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+
   const onSubmitHandle = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/login", {
@@ -28,6 +30,7 @@ export default function Login() {
       console.log("Enter Valid Credentials");
     }
   };
+
   const onChangeHandler = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
@@ -35,46 +38,55 @@ export default function Login() {
   return (
     <>
       <Navbar />
-      <div>
-        <div
-          className="flex flex-col justify-center items-center w-full"
-          style={{ height: "42.2em" }}
-        >
+      <div className="flex flex-col justify-center items-center w-full min-h-screen bg-gray-300">
+        <div className="flex flex-col justify-center items-center w-full max-w-md bg-white shadow-md rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-green-700 mb-4">Login</h2>
           <form
             onSubmit={onSubmitHandle}
-            className="flex flex-col gap-2 justify-center items-center border border-black p-4"
+            className="flex flex-col gap-4 w-full"
           >
-            <label htmlFor="email" className="mb-2">
-              Email:
+            <div className="flex flex-col">
+              <label htmlFor="email" className="text-gray-700 mb-2">
+                Email:
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={credentials.email}
                 onChange={onChangeHandler}
-                className="border border-black p-2 ml-2"
+                className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-            </label>
-            <label htmlFor="password" className="mb-2">
-              Password:
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="password" className="text-gray-700 mb-2">
+                Password:
+              </label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 value={credentials.password}
                 onChange={onChangeHandler}
-                className="border border-black p-2 ml-2"
+                className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-            </label>
-            <button type="submit" className="bg-green-700 py-2 px-6 rounded">
+            </div>
+            <button
+              type="submit"
+              className="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors duration-300"
+            >
               Login
             </button>
-            <Link to="/signup" className="bg-blue-700 py-2 px-2 rounded">
-              New user
+            <Link
+              to="/signup"
+              className="text-center text-blue-600 hover:underline mt-4"
+            >
+              New user? Sign up
             </Link>
           </form>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

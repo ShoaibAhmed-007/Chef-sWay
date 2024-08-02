@@ -1,9 +1,8 @@
 import { useCartContext } from "./ContextReducer";
 
-export default function MyCart({ visible, setVisible, setOrders }) {
+export default function MyCart({ visible, setVisible, myOrders }) {
   let totalPrice = 0;
   const { state, dispatch } = useCartContext();
-  console.log(state);
 
   function decreaseQuantity(item) {
     dispatch({ type: "DECREASE_QUANTITY", payload: item.id });
@@ -16,8 +15,9 @@ export default function MyCart({ visible, setVisible, setOrders }) {
   function deleteItem(item) {
     dispatch({ type: "DELETE", payload: item.id });
   }
+
   function confirmOrder() {
-    setOrders = state;
+    myOrders(state);
     const saveOrder = async () => {
       let res = await fetch("http://localhost:3000/api/orders", {
         method: "POST",
@@ -26,7 +26,7 @@ export default function MyCart({ visible, setVisible, setOrders }) {
         },
         body: JSON.stringify({
           email: localStorage.getItem("userEmail"),
-          orderData: setOrders,
+          orderData: state,
         }),
       });
       const json = await res.json();
@@ -46,11 +46,11 @@ export default function MyCart({ visible, setVisible, setOrders }) {
         className="fixed top-0 right-0 w-full h-full flex justify-center items-center"
         style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
       >
-        <div className="bg-white p-20 flex flex-col h-4/5 justify-between w-full items-center gap-4 overflow-scroll">
-          <div>No items in the cart</div>
+        <div className="bg-white p-10 flex flex-col h-4/5 justify-between w-3/4 md:w-1/2 items-center gap-4 rounded-lg">
+          <div className="text-xl">No items in the cart</div>
           <div className="flex justify-end gap-4 w-full mt-12">
             <button
-              className="bg-red-700 py-2 px-4 text-3xl rounded"
+              className="bg-red-700 py-2 px-4 text-xl rounded text-white"
               onClick={() => setVisible(false)}
             >
               Cancel
@@ -62,69 +62,72 @@ export default function MyCart({ visible, setVisible, setOrders }) {
   }
 
   return (
-    <>
-      <div
-        className="fixed top-0 right-0 w-full h-full flex justify-center items-center"
-        style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
-      >
-        <div className="bg-white p-20 flex flex-col h-4/5 justify-between w-full items-center gap-4 overflow-scroll">
-          {state.map((item) => {
-            totalPrice += item.price;
-            return (
-              <>
-                <div
-                  className="flex items-center h-fit p-2 gap-4 border-2 border-black rounded-lg"
-                  style={{ width: "80em" }}
+    <div
+      className="fixed top-0 right-0 w-full h-full flex justify-center items-center"
+      style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+    >
+      <div className="bg-white p-10 flex flex-col h-4/5 justify-between w-3/4 md:w-1/2 items-center gap-4 rounded-lg overflow-scroll overflow-x-hidden">
+        {state.map((item) => {
+          totalPrice += item.price;
+          return (
+            <div
+              key={item.id}
+              className="flex items-center w-full p-4 gap-4 border-2 border-gray-300 rounded-lg bg-gray-50"
+            >
+              <img
+                src={item.img}
+                alt={item.name}
+                className="w-32 h-24 rounded"
+              />
+              <div className="flex flex-col flex-grow gap-2">
+                <div className="text-lg font-semibold">{item.name}</div>
+                <div className="text-md">Quantity: {item.quantity}</div>
+                <div className="text-md">Size: {item.size}</div>
+                <div className="text-md">Price: Rs.{item.price}</div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => decreaseQuantity(item)}
+                  className="bg-red-700 px-2 text-white text-xl rounded"
                 >
-                  <img src={item.img} alt={item.name} className="w-44 h-24" />
-                  <div>
-                    <div className="text-xl w-52">{item.name}</div>
-                  </div>
-                  <div className="flex gap-4 w-96">
-                    <div>Quantity: {item.quantity}</div>
-                    <div>Size: {item.size}</div>
-                    <div>Price: {item.price}</div>
-                  </div>
-                  <div className="flex gap-4 w-96 justify-end">
-                    <button
-                      onClick={() => decreaseQuantity(item)}
-                      className="bg-red-700  px-4 text-3xl rounded"
-                    >
-                      -
-                    </button>
-                    <button
-                      onClick={() => increaseQuantity(item)}
-                      className="bg-blue-700 px-4 text-3xl rounded"
-                    >
-                      +
-                    </button>
-                    <button onClick={() => deleteItem(item)}>Delete</button>
-                  </div>
-                </div>
-              </>
-            );
-          })}
-          <div className="flex justify-between w-full items-center">
-            <div className="w-96 font-bold text-2xl">
-              Total Price: <span className="font-normal">{totalPrice}</span>
+                  -
+                </button>
+                <button
+                  onClick={() => increaseQuantity(item)}
+                  className="bg-blue-700 px-2 text-white text-xl rounded"
+                >
+                  +
+                </button>
+                <button
+                  onClick={() => deleteItem(item)}
+                  className="bg-gray-700 px-2 text-white text-xl rounded"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-            <div className="flex justify-end gap-4 w-full mt-12">
-              <button
-                className="bg-red-700 py-2 px-4 text-3xl rounded"
-                onClick={() => setVisible(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-blue-700 py-2 px-4 text-3xl rounded"
-                onClick={() => confirmOrder()}
-              >
-                Confirm
-              </button>
-            </div>
+          );
+        })}
+        <div className="flex justify-between w-full items-center mt-4">
+          <div className="font-bold text-xl">
+            Total Price: <span className="font-normal">Rs. {totalPrice}</span>
+          </div>
+          <div className="flex gap-4">
+            <button
+              className="bg-red-700 py-2 px-4 text-xl rounded text-white"
+              onClick={() => setVisible(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-blue-700 py-2 px-4 text-xl rounded text-white"
+              onClick={() => confirmOrder()}
+            >
+              Confirm
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
